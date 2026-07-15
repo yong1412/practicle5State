@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'item.dart';
 import 'package:provider/provider.dart';
+import 'item.dart';
 import 'cart_provider.dart';
 import 'card_dart.dart';
 
@@ -122,20 +122,44 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // This method is rerun every time setState is called, for instance as done
+    // by the _incrementCounter method above.
+    //
+    // The Flutter framework has been optimized to make rerunning build methods
+    // fast, so that you can just rebuild anything that needs updating rather
+    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
         title: const Text('State Management'),
         actions: [
           IconButton(
-            onPressed: (){
+            onPressed: () {
               Navigator.push<void>(
-                context,
-                MaterialPageRoute<void>(
-                  builder: (BuildContext context) => const CartPage()));
+                  context,
+                  MaterialPageRoute<void>(
+                      builder: (BuildContext context) => const CartPage()));
             },
             icon: const Icon(Icons.shopping_cart),
           ),
         ],
+      ),
+      body: Center(
+          child: ListView.separated(
+              padding: const EdgeInsets.all(8),
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemBuilder: (BuildContext context, int index) {
+                return CartItem(index: index);
+              },
+              separatorBuilder: (BuildContext context, int index) =>
+              const Divider(),
+              itemCount: catalog.length
+          )
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _incrementCounter,
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
       ),
     );
   }
